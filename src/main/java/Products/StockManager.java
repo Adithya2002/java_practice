@@ -30,9 +30,6 @@ public class StockManager {
         return stock;
     }
 
-    public void stockPriorityQueue(){
-
-    }
     public synchronized void stockUpdater(int amount) throws Exception {
         totalUpdates++;
         if(amount>=0){
