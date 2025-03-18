@@ -41,6 +41,10 @@ public class StockManager {
         else{
             removeStock(amount);
         }
+        if(this.stock<50){
+            this.stock+=20;
+            System.out.println("Restocked 20 as stock went below 50");
+        }
     }
     public synchronized void addStock(int amount) throws InterruptedException {
         Thread.sleep(100);
