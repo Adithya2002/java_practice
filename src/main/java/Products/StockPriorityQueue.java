@@ -1,4 +1,4 @@
-package main.java.Products;
+package Products;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +8,7 @@ public class StockPriorityQueue {
     PriorityQueue<Integer> stockPQ = new PriorityQueue<>((a, b) -> Math.abs(b) - Math.abs(a));
     List<Integer> updates = new ArrayList<>();
     StockManager stockManager = new StockManager(100);
-    StockPriorityQueue(List<Integer> updates) {
+    public StockPriorityQueue(List<Integer> updates) {
         this.updates = updates;
         queueStock();
         try {

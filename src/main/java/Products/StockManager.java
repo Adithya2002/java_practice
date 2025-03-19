@@ -1,4 +1,4 @@
-package main.java.Products;
+package Products;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,7 +14,7 @@ public class StockManager {
     public int totalUpdates=0;
     String filePath = "persistenceStorage/stock.txt";
     
-    StockManager(){
+    public StockManager(){
         if(loadStockFromFile()==null){
             this.stock = 0;
         }
@@ -37,24 +37,30 @@ public class StockManager {
         }
         else{
             removeStock(amount);
+            restock(20);
         }
-        if(this.stock<50){
-            this.stock+=20;
-            System.out.println("Restocked 20 as stock went below 50");
-        }
+
     }
-    public synchronized void addStock(int amount) throws InterruptedException {
-        Thread.sleep(100);
+    public synchronized void addStock(int amount) {
+
         this.stock += amount;
         System.out.println(Thread.currentThread().getName() + ": Added " + amount + ", New stock: " + this.stock);
     }
     public synchronized void removeStock(int amount) throws Exception {
-        Thread.sleep(200);
+
         if(amount>stock){
             throw new Products.InsufficientStockException(new SimpleDateFormat("HH:mm:ss").format(new Date()) + " Cannot remove " + amount + ", only " + this.stock +  " available");
         }
         this.stock += amount;
         System.out.println(Thread.currentThread().getName() + ": Removed " + -amount + ", New stock: " + this.stock);
+    }
+    public synchronized int restock(int amount)  {
+        int threshold = 50;
+        if (stock < threshold) {
+            addStock(amount);
+            System.out.println(Thread.currentThread().getName() + ": Restocked " + amount + ", new stock: " + stock);
+        }
+        return this.stock;
     }
 
     public void saveStockToFile(){
