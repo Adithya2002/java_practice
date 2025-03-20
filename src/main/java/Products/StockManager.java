@@ -1,5 +1,9 @@
 package Products;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Marker;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -13,6 +17,8 @@ public class StockManager {
     int stock;
     public int totalUpdates=0;
     String filePath = "persistenceStorage/stock.txt";
+    private static final Logger logger = LoggerFactory.getLogger(StockManager.class);
+
     
     public StockManager(){
         if(loadStockFromFile()==null){
@@ -58,7 +64,8 @@ public class StockManager {
         int threshold = 50;
         if (stock < threshold) {
             addStock(amount);
-            System.out.println(Thread.currentThread().getName() + ": Restocked " + amount + ", new stock: " + stock);
+            logger.info("Restocked {}, new stock {}",amount, this.stock);
+//            System.out.println(Thread.currentThread().getName() + ": Restocked " + amount + ", new stock: " + stock);
         }
         return this.stock;
     }
